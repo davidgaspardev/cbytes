@@ -11,12 +11,16 @@ unsigned int length(const char * string) {
 
 // Entry point, It is the point at which execution 
 // of program is started
-int main() {
+int main(unsigned int argc, const char ** argv) {
 
     // Create a char array (pointer)
     char * hello_world = "Hello World!";
 
-    printf("%s (length: %u)", hello_world, length(hello_world));
+    printf("%s (length: %u)\n\n", hello_world, length(hello_world));
+
+    for(int i = 1; i < argc; i++) {
+        printf("%s (length: %u)\n", argv[i], length(argv[i]));
+    }
 
     return 1;
 }
