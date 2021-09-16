@@ -66,10 +66,12 @@ int subcopy(const char * src, int start_index, int end_index, char * dest,  size
 
     // Check if the index exceeds the length of the string to be pasted (destination).
     // If it exceeds, update index to the last index of the string to be pasted.
-    if(end_index >= sizeof_dest) end_index = (sizeof_dest - 1);
+    // if(end_index >= sizeof_dest) end_index = (sizeof_dest - 1);
 
     // calculation of total length of final string (destination).
     unsigned int dest_length = (end_index + 1) - start_index;
+
+    if(dest_length > sizeof_dest) dest_length = sizeof_dest;
 
     for(int i = 0; i < dest_length; i++) dest[i] = *(src + start_index + i);
 
