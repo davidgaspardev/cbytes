@@ -74,6 +74,8 @@ int subcopy(const char * src, int start_index, int end_index, char * dest,  size
     for(int i = 0; i < dest_length; i++) dest[i] = *(src + start_index + i);
 
     dest[dest_length] = '\0';
+
+    return 1;
 }
 
 #endif
