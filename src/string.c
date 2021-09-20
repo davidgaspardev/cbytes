@@ -80,4 +80,12 @@ int subcopy(const char * src, int start_index, int end_index, char * dest,  size
     return 1;
 }
 
+int subcopy_len(const char * src, unsigned int dest_len, char * dest, size_t sizeof_dest) {
+    return subcopy(src, 0, (dest_len - 1), dest, sizeof_dest);
+}
+
+int subcopy_index_len(const char * src, unsigned int start_index, unsigned int dest_len, char * dest, size_t sizeof_dest) {
+    return subcopy(src, start_index, ((start_index + dest_len) - 1), dest, sizeof_dest);
+}
+
 #endif
