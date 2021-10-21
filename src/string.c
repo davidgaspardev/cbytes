@@ -1,10 +1,4 @@
-#ifndef _STRING_H_
-#define _STRING_H_
-
-#include <stdio.h>
-
-#define FALSE  0
-#define TRUE   1
+#include "string.h"
 
 // Get argument length
 unsigned int length(const char * arg) {
@@ -87,5 +81,3 @@ int subcopy_len(const char * src, unsigned int dest_len, char * dest, size_t siz
 int subcopy_index_len(const char * src, unsigned int start_index, unsigned int dest_len, char * dest, size_t sizeof_dest) {
     return subcopy(src, start_index, ((start_index + dest_len) - 1), dest, sizeof_dest);
 }
-
-#endif
