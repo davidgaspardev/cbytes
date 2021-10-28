@@ -1,3 +1,7 @@
+/*
+ * My library for string
+ * Author: David Gaspar <davidgaspar.dev@gmail.com>
+ */
 #ifndef _STRING_H_
 #define _STRING_H_
 

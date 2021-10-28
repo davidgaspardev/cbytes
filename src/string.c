@@ -1,3 +1,7 @@
+/*
+ * My library for string
+ * Author: David Gaspar <davidgaspar.dev@gmail.com>
+ */
 #include "string.h"
 
 // Get argument length
