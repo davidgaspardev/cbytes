@@ -27,4 +27,13 @@ Here are differences:
     ```
     It allocates `12` consecutive bytes for string literal `"Hello World"` and `4` extra bytes for pointer variable `ptr`. And assigns the address of the string literal to `ptr`. So, in this case, a total of `16` bytes are allocated.
     ![allocations for char pointer in c](https://overiq.com/media/uploads/2020/07/26/character-pointer-and-string-literal-1504599248003.png)
-    
+
+## This library
+
+In this library we have the following functions for manipulating strings:
+- `length`: get the length of a string.
+- `equal`: check if two strings are the same.
+- `copy`: copy characters from one string to another string.
+- `subcopy`: copy a specific portion of a string, using the starting index and an ending index, to another string.
+- `subcopy_len`: copy a specific portion of a string, using the length, to another string.
+- `subcopy_index_len`: copy a specific portion of a string, using the starting index and the length, to another string.
