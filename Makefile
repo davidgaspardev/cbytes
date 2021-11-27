@@ -69,16 +69,7 @@ ifndef HOST_ARCH
 $(error We could not detect your host architecture)
 endif
 
-TARGETS: help info clean string.o
-
-.PRONY: $(TARGETS)
-
-all: main.o string.o
-	$(CC) -o test $(BUILD_DIRECTORY)/string.o $(BUILD_DIRECTORY)/main.o
-	@echo "Success"
-
-test: string.o
-	$(CC) -c $(TESTS_DIRECTORY)/$(TEST).c -o $(BUILD_DIRECTORY)/test.o
+test: string.o test.o
 	@mkdir -p $(BIN_DIRECTORY)
 	$(CC) -o $(BIN_DIRECTORY)/test $(BUILD_DIRECTORY)/string.o $(BUILD_DIRECTORY)/test.o 
 
@@ -93,9 +84,12 @@ clean:
 	rm -rf $(BUILD_DIRECTORY)
 	rm -rf $(BIN_DIRECTORY)
 
-main.o: string.o
-	$(CC) -c $(SOURCE_DIRECTORY)/main.c -o $(BUILD_DIRECTORY)/main.o
+test.o:
+	@mkdir -p $(BUILD_DIRECTORY)
+	@$(CC) -c $(TESTS_DIRECTORY)/$(TEST).c -o $(BUILD_DIRECTORY)/test.o
+	@echo "[ OK ] Test object file created ($(BUILD_DIRECTORY)/test.o)"
 
 string.o:
 	@mkdir -p $(BUILD_DIRECTORY)
-	$(CC) -c $(SOURCE_DIRECTORY)/string.c -o $(BUILD_DIRECTORY)/string.o
+	@$(CC) -c $(SOURCE_DIRECTORY)/string.c -o $(BUILD_DIRECTORY)/string.o
+	@echo "[ OK ] String object file created ($(BUILD_DIRECTORY)/string.o)"
