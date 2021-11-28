@@ -10,7 +10,7 @@ void copy_test(const char * data) {
 
     log_info("Copying the first %i characters of the '%s' string to the data_copy variable", len, data);
     
-    if(subcopy_len(data, len, data_copy, sizeof(data_copy))) {
+    if(subcopy_len(data, len, data_copy, sizeof(data_copy)) > -1) {
         log_ok("data: %s", data);
         log_ok("data_copy: " YEL "%s" RESET, data_copy);
     } else {
@@ -20,7 +20,7 @@ void copy_test(const char * data) {
     int start_index = len / 2;
 
     log_info("Copying the first %i characters of the '%s' string after the %iº character to the data_copy variable", len, data, start_index);
-    if(subcopy_index_len(data, start_index, len, data_copy, sizeof(data_copy))) {
+    if(subcopy_index_len(data, start_index, len, data_copy, sizeof(data_copy)) > -1) {
         log_ok("data: %s", data);
         log_ok("data_copy: " YEL "%s" RESET, data_copy);
     } else {
