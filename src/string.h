@@ -16,5 +16,6 @@ int copy(const char *source, char *destination, size_t sizeof_destination);
 int subcopy(const char *source, int start_index, int end_index, char *destination, size_t sizeof_destination);
 int subcopy_len(const char *src, unsigned int dest_length, char *dest, size_t sizeof_dest);
 int subcopy_index_len(const char *src, unsigned int start_index, unsigned int dest_length, char *dest, size_t sizeof_dest);
+int index_of(const char *target, const char *fragment);
 
 #endif

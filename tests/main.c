@@ -2,6 +2,7 @@
 #include "../src/string.h"
 #include "copy_test.c"
 #include "length_test.c"
+#include "index_of_test.c"
 
 // Entry point, It is the point at which execution 
 // of program is started
@@ -11,6 +12,7 @@ int main(int argc, const char ** argv) {
         for(int i = 1; i < argc; i++) {
             copy_test(argv[i]);
             length_test(argv[i]);
+            index_of_test(argv[i]);
         }
     } 
     

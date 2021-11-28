@@ -100,3 +100,40 @@ int subcopy_index_len(const char *src, unsigned int start_index, unsigned int de
 {
     return subcopy(src, start_index, ((start_index + dest_len) - 1), dest, sizeof_dest);
 }
+
+int index_of(const char *target, const char *fragment)
+{
+    int result = -1;
+    int target_len = length(target);
+    int fragment_len = length(fragment);
+
+    if (fragment_len > target_len)
+        return -1;
+
+    if (fragment_len == target_len)
+    {
+        if (equal(target, fragment))
+        {
+            return 0;
+        }
+        return -1;
+    }
+
+    int i, j = 0;
+    for (i = 0; i < target_len; i++)
+    {
+        if(target[i] == fragment[j]) {
+            result = i;
+            for (; j < fragment_len; j++)
+                if(target[i+j] != fragment[j])
+                {
+                    result = -1;
+                    j = 0;
+                    break;
+                }
+            if (result != -1) return result;
+        }
+    }
+
+    return -1;
+}
