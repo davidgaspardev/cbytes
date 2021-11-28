@@ -5,7 +5,7 @@
 #include "string.h"
 
 // Get argument length
-unsigned int length(const char *arg)
+uint_t length(const char *arg)
 {
     unsigned int offset = 0;
     unsigned int count = 0;
@@ -20,21 +20,21 @@ unsigned int length(const char *arg)
 }
 
 // Check that the values of two string (char *) are equal.
-unsigned int equal(const char *data_1, const char *data_2)
+uint8_t equal(const char *data_1, const char *data_2)
 {
     unsigned int data_1_length = length(data_1);
     unsigned int data_2_length = length(data_2);
 
     if (data_1_length != data_2_length)
-        return FALSE;
+        return false;
 
     for (int i = 0; i < data_1_length; i++)
     {
         if (data_1[i] != data_2[i])
-            return FALSE;
+            break;
     }
 
-    return TRUE;
+    return true;
 }
 
 // Copy data from the source argument to the target argument
@@ -42,7 +42,7 @@ unsigned int equal(const char *data_1, const char *data_2)
 // Impotant: destination needs to be declared as "char [n]", because if
 // it is declared as "char *", it will not be possible to modify the data.
 // char * is a literal string read-only declaration.
-int copy(const char *source, char *destination, size_t sizeof_destination)
+int8_t copy(const char *source, char *destination, size_t sizeof_destination)
 {
     unsigned int source_length = length(source);
 
@@ -61,7 +61,7 @@ int copy(const char *source, char *destination, size_t sizeof_destination)
 
 // subcopy method
 // if the function returns -1 it means that the start_index variable is greater than the end_index variable.
-int subcopy(const char *src, int start_index, int end_index, char *dest, size_t sizeof_dest)
+int8_t subcopy(const char *src, int start_index, int end_index, char *dest, size_t sizeof_dest)
 {
     // Check if the initial index exceeds the final index.
     if (start_index > end_index)
@@ -91,12 +91,12 @@ int subcopy(const char *src, int start_index, int end_index, char *dest, size_t 
     return 1;
 }
 
-int subcopy_len(const char *src, unsigned int dest_len, char *dest, size_t sizeof_dest)
+int8_t subcopy_len(const char *src, unsigned int dest_len, char *dest, size_t sizeof_dest)
 {
     return subcopy(src, 0, (dest_len - 1), dest, sizeof_dest);
 }
 
-int subcopy_index_len(const char *src, unsigned int start_index, unsigned int dest_len, char *dest, size_t sizeof_dest)
+int8_t subcopy_index_len(const char *src, unsigned int start_index, unsigned int dest_len, char *dest, size_t sizeof_dest)
 {
     return subcopy(src, start_index, ((start_index + dest_len) - 1), dest, sizeof_dest);
 }
