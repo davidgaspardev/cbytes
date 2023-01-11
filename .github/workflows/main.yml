@@ -14,8 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: install dependencies
-      run: sudo apt-get install -y clang++
+    - name: build test
+      run: make test
 
-    - name: test
-      run: make test && ./bin/test davidgaspardev
+    - name: run test
+      run: ./bin/test davidgaspardev
+      
