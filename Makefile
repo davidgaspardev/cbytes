@@ -1,4 +1,5 @@
 BIN_DIRECTORY ?= bin
+LIB_DIRECTORY = lib
 BUILD_DIRECTORY = build
 SOURCE_DIRECTORY = src
 TESTS_DIRECTORY = tests
@@ -71,7 +72,16 @@ endif
 
 test: string.o test.o
 	@mkdir -p $(BIN_DIRECTORY)
-	$(CC) -o $(BIN_DIRECTORY)/test $(BUILD_DIRECTORY)/string.o $(BUILD_DIRECTORY)/test.o 
+	$(CC) -o $(BIN_DIRECTORY)/test $(BUILD_DIRECTORY)/string.o $(BUILD_DIRECTORY)/test.o
+
+dirs:
+	@mkdir -p $(LIB_DIRECTORY)
+	@mkdir -p $(BUILD_DIRECTORY)
+	@mkdir -p $(BIN_DIRECTORY)
+
+lib: dirs string.o
+	@ar -rc $(LIB_DIRECTORY)/libstring.a $(BUILD_DIRECTORY)/string.o
+	@echo "[ OK ] Static library file created ($(LIB_DIRECTORY)/libstring.a)"
 
 help:
 	@echo "Available targets: $(TARGETS)"
@@ -83,13 +93,12 @@ info:
 clean:
 	rm -rf $(BUILD_DIRECTORY)
 	rm -rf $(BIN_DIRECTORY)
+	rm -rf $(LIB_DIRECTORY)
 
-test.o:
-	@mkdir -p $(BUILD_DIRECTORY)
+test.o: dirs
 	@$(CC) -c $(TESTS_DIRECTORY)/$(TEST).c -o $(BUILD_DIRECTORY)/test.o
 	@echo "[ OK ] Test object file created ($(BUILD_DIRECTORY)/test.o)"
 
-string.o:
-	@mkdir -p $(BUILD_DIRECTORY)
+string.o: dirs
 	@$(CC) -c $(SOURCE_DIRECTORY)/string.c -o $(BUILD_DIRECTORY)/string.o
 	@echo "[ OK ] String object file created ($(BUILD_DIRECTORY)/string.o)"
