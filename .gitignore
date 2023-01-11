@@ -6,3 +6,6 @@ a.out
 .vscode
 build
 bin
+
+# Ignore archive files
+*.a
