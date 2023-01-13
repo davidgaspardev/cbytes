@@ -29,7 +29,7 @@ else
         PLATFORM = Linux
 
         # Detect architecture
-        ifeq ($(shell uname -m,x86_64))
+        ifeq ($(shell uname -m),x86_64)
             HOST_ARCH = x64
         endif
         ifeq ($(filter %86,$(shell uname -m)),)
