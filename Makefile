@@ -1,10 +1,8 @@
-BIN_DIRECTORY ?= bin
-LIB_DIRECTORY = lib
-BUILD_DIRECTORY = build
+BIN_DIRECTORY    = bin
+LIB_DIRECTORY    = lib
+BUILD_DIRECTORY  = build
 SOURCE_DIRECTORY = src
-TESTS_DIRECTORY = tests
-
-TEST ?= main
+TESTS_DIRECTORY  = tests
 
 CC = clang
 
@@ -96,7 +94,7 @@ clean:
 	rm -rf $(LIB_DIRECTORY)
 
 test.o: dirs
-	@$(CC) -c $(TESTS_DIRECTORY)/$(TEST).c -o $(BUILD_DIRECTORY)/test.o
+	@$(CC) -c $(TESTS_DIRECTORY)/main.c -o $(BUILD_DIRECTORY)/test.o
 	@echo "[ OK ] Test object file created ($(BUILD_DIRECTORY)/test.o)"
 
 string.o: dirs
