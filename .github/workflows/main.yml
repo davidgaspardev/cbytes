@@ -7,8 +7,14 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  info:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: show architecture
+        run: make info
+
+  test:
     runs-on: ubuntu-latest
 
     steps:
