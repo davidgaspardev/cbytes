@@ -68,6 +68,18 @@ ifndef HOST_ARCH
 $(error We could not detect your host architecture)
 endif
 
+TARGETS = \
+    test \
+    dirs \
+    lib \
+    help \
+    info \
+    clean \
+    test.o \
+    string.o
+
+.PHONY: $(TARGETS)
+
 test: string.o test.o
 	@mkdir -p $(BIN_DIRECTORY)
 	$(CC) -o $(BIN_DIRECTORY)/test $(BUILD_DIRECTORY)/string.o $(BUILD_DIRECTORY)/test.o
