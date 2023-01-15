@@ -26,4 +26,4 @@ jobs:
       run: make test
 
     - name: run test
-      run: echo "gas" | ./bin/test davidgaspardev
+      run: echo "gas\n" | ./bin/test davidgaspardev
