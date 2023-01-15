@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: show architecture
         run: make info
 
@@ -24,5 +26,4 @@ jobs:
       run: make test
 
     - name: run test
-      run: ./bin/test davidgaspardev
-      
+      run: echo "gas" | ./bin/test davidgaspardev
