@@ -22,5 +22,5 @@ int main(int argc, const char **argv)
     else
         printf("You must enter the arguments to perform the tests\n");
 
-    return 1;
+    return 0;
 }
