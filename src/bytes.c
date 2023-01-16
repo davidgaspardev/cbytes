@@ -2,10 +2,10 @@
  * My library for string
  * Author: David Gaspar <davidgaspar.dev@gmail.com>
  */
-#include "string.h"
+#include "bytes.h"
 
 // Get argument length
-uint_t length(const char *arg)
+unsigned int length(cbytes_t arg)
 {
     unsigned int offset = 0;
     unsigned int count = 0;
@@ -19,18 +19,18 @@ uint_t length(const char *arg)
     return count;
 }
 
-// Check that the values of two string (char *) are equal.
-uint8_t equal(const char *data_1, const char *data_2)
+// Check that the values of two string (bytes_t ) are equal.
+ubyte_t equal(cbytes_t bytes_1, cbytes_t bytes_2)
 {
-    unsigned int data_1_length = length(data_1);
-    unsigned int data_2_length = length(data_2);
+    unsigned int bytes_1_length = length(bytes_1);
+    unsigned int bytes_2_length = length(bytes_2);
 
-    if (data_1_length != data_2_length)
+    if (bytes_1_length != bytes_2_length)
         return false;
 
-    for (int i = 0; i < data_1_length; i++)
+    for (int i = 0; i < bytes_1_length; i++)
     {
-        if (data_1[i] != data_2[i])
+        if (bytes_1[i] != bytes_2[i])
             break;
     }
 
@@ -39,10 +39,10 @@ uint8_t equal(const char *data_1, const char *data_2)
 
 // Copy data from the source argument to the target argument
 //
-// Impotant: destination needs to be declared as "char [n]", because if
-// it is declared as "char *", it will not be possible to modify the data.
-// char * is a literal string read-only declaration.
-int8_t copy(const char *source, char *destination, size_t sizeof_destination)
+// Impotant: destination needs to be declared as "byte_t [n]", because if
+// it is declared as "bytes_t ", it will not be possible to modify the data.
+// bytes_t  is a literal string read-only declaration.
+byte_t copy(cbytes_t source, bytes_t destination, unsigned long sizeof_destination)
 {
     unsigned int source_length = length(source);
 
@@ -61,7 +61,7 @@ int8_t copy(const char *source, char *destination, size_t sizeof_destination)
 
 // subcopy method
 // if the function returns -1 it means that the start_index variable is greater than the end_index variable.
-int8_t subcopy(const char *src, int start_index, int end_index, char *dest, size_t sizeof_dest)
+byte_t subcopy(cbytes_t src, unsigned int start_index, unsigned int end_index, bytes_t dest, unsigned long sizeof_dest)
 {
     // Check if the initial index exceeds the final index.
     if (start_index > end_index)
@@ -91,17 +91,17 @@ int8_t subcopy(const char *src, int start_index, int end_index, char *dest, size
     return 1;
 }
 
-int8_t subcopy_len(const char *src, unsigned int dest_len, char *dest, size_t sizeof_dest)
+byte_t subcopy_len(cbytes_t src, unsigned int dest_len, bytes_t dest, unsigned long sizeof_dest)
 {
     return subcopy(src, 0, (dest_len - 1), dest, sizeof_dest);
 }
 
-int8_t subcopy_index_len(const char *src, unsigned int start_index, unsigned int dest_len, char *dest, size_t sizeof_dest)
+byte_t subcopy_index_len(cbytes_t src, unsigned int start_index, unsigned int dest_len, bytes_t dest, unsigned long sizeof_dest)
 {
     return subcopy(src, start_index, ((start_index + dest_len) - 1), dest, sizeof_dest);
 }
 
-int index_of(const char *target, const char *fragment)
+int index_of(cbytes_t target, cbytes_t fragment)
 {
     int result = -1;
     int target_len = length(target);
