@@ -9,21 +9,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: show architecture
+      - name: Show architecture
         run: make info
 
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: build test
+      - name: Build test
         run: make test
 
-      - name: run test
+      - name: Run test
         run: echo "gas\n" | ./bin/test davidgaspardev
