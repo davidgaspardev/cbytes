@@ -1,10 +1,22 @@
+NAME = bytes
+
 BIN_DIRECTORY    = bin
 LIB_DIRECTORY    = lib
 BUILD_DIRECTORY  = build
 SOURCE_DIRECTORY = src
 TESTS_DIRECTORY  = tests
 
+TMP_DIRECTORIES = \
+    $(BIN_DIRECTORY) \
+    $(LIB_DIRECTORY) \
+    $(BUILD_DIRECTORY)
+
 CC = clang
+CFLAGS = -c -Wall
+
+SOURCES  = $(wildcard $(SOURCE_DIRECTORY)/*.c)
+
+BUILDERS = $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SOURCES))
 
 # ---------------------------------------------------------------------
 # Operating system and architecture detection
@@ -70,28 +82,19 @@ endif
 
 TARGETS = \
     test \
-    dirs \
-    lib \
+    library \
     help \
     info \
-    clean \
-    test.o \
-    string.o
+    clean 
 
 .PHONY: $(TARGETS)
 
-test: string.o test.o
-	@mkdir -p $(BIN_DIRECTORY)
-	$(CC) -o $(BIN_DIRECTORY)/test $(BUILD_DIRECTORY)/string.o $(BUILD_DIRECTORY)/test.o
+test: $(BIN_DIRECTORY) $(BUILDERS)
+	$(CC) $(TESTS_DIRECTORY)/main.c $(BUILDERS) -o $(BIN_DIRECTORY)/test
 
-dirs:
-	@mkdir -p $(LIB_DIRECTORY)
-	@mkdir -p $(BUILD_DIRECTORY)
-	@mkdir -p $(BIN_DIRECTORY)
-
-lib: dirs string.o
-	@ar -rc $(LIB_DIRECTORY)/libstring.a $(BUILD_DIRECTORY)/string.o
-	@echo "[ OK ] Static library file created ($(LIB_DIRECTORY)/libstring.a)"
+library: $(LIB_DIRECTORY) $(BUILDERS)
+	@ar -rc $(LIB_DIRECTORY)/lib$(NAME).a $(BUILD_DIRECTORY)/$(NAME).o
+	@echo "[ OK ] Static library file created ($(LIB_DIRECTORY)/lib$(NAME).a)"
 
 help:
 	@echo "Available targets: $(TARGETS)"
@@ -101,14 +104,18 @@ info:
 	@echo "Host arch: $(HOST_ARCH)"
 
 clean:
-	rm -rf $(BUILD_DIRECTORY)
-	rm -rf $(BIN_DIRECTORY)
-	rm -rf $(LIB_DIRECTORY)
+	$(foreach dir, $(TMP_DIRECTORIES), $(shell rm -rf $(dir)))
+	@echo "[ OK ] Removed directories if they existed: $(TMP_DIRECTORIES)"
 
-test.o: dirs
-	@$(CC) -c $(TESTS_DIRECTORY)/main.c -o $(BUILD_DIRECTORY)/test.o
-	@echo "[ OK ] Test object file created ($(BUILD_DIRECTORY)/test.o)"
+$(BUILD_DIRECTORY):
+	@mkdir -p $@
 
-string.o: dirs
-	@$(CC) -c $(SOURCE_DIRECTORY)/string.c -o $(BUILD_DIRECTORY)/string.o
-	@echo "[ OK ] String object file created ($(BUILD_DIRECTORY)/string.o)"
+$(BIN_DIRECTORY):
+	@mkdir -p $@
+
+$(LIB_DIRECTORY):
+	@mkdir -p $@
+
+$(BUILD_DIRECTORY)/%.o: $(BUILD_DIRECTORY) $(SOURCE_DIRECTORY)/%.c
+	$(CC) $(CFLAGS) $(word 2, $^) -o $@
+
