@@ -22,3 +22,9 @@ jobs:
         with:
           name: libbytes.a
           path: lib/libbytes.a
+      
+      - name: Upload header
+        uses: actions/upload-artifact@v3
+        with:
+          name: bytes.h
+          path: src/bytes.h
