@@ -1,22 +1,40 @@
 NAME = bytes
 
+CC = clang
+CFLAGS = -c -Wall
+
 BIN_DIRECTORY    = bin
 LIB_DIRECTORY    = lib
 BUILD_DIRECTORY  = build
 SOURCE_DIRECTORY = src
 TESTS_DIRECTORY  = tests
-
-TMP_DIRECTORIES = \
+TMP_DIRECTORIES =    \
     $(BIN_DIRECTORY) \
     $(LIB_DIRECTORY) \
     $(BUILD_DIRECTORY)
 
-CC = clang
-CFLAGS = -c -Wall
-
 SOURCES  = $(wildcard $(SOURCE_DIRECTORY)/*.c)
-
 BUILDERS = $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SOURCES))
+
+HOST_ARCH_X64     = x64
+HOST_ARCH_X86     = x86
+HOST_ARCH_X86_64  = x86_64
+HOST_ARCH_AMD64   = AMD64
+HOST_ARCH_ARM64   = arm64
+HOST_ARCH_ARMV7L  = armv7l
+HOST_ARCH_ARMV7HF = armv7hf
+HOST_ARCH_ARMV8   = armv8
+HOST_ARCH_AARCH64 = aarch64
+HOST_ARCH_ALL =       \
+    HOST_ARCH_X64     \
+    HOST_ARCH_X86     \
+    HOST_ARCH_X86_64  \
+    HOST_ARCH_AMD64   \
+    HOST_ARCH_ARM64   \
+    HOST_ARCH_ARMV7L  \
+    HOST_ARCH_ARMV7HF \
+    HOST_ARCH_ARMV8   \
+    HOST_ARCH_AARCH64
 
 # ---------------------------------------------------------------------
 # Operating system and architecture detection
@@ -26,14 +44,14 @@ ifeq ($(OS),Windows_NT)
     PLATFORM = win32
 
     # Detect architecture
-    ifeq ($(PROCESSOR_ARCHITEW6432),AMD64)
-        HOST_ARCH = x64
+    ifeq ($(PROCESSOR_ARCHITEW6432),$(HOST_ARCH_AMD64))
+        HOST_ARCH = $(HOST_ARCH_X64)
     else 
-        ifeq ($(PROCESSOR_ARQUITECTURE),AMD64)
-            HOST_ARCH = x64
+        ifeq ($(PROCESSOR_ARQUITECTURE),$(HOST_ARCH_AMD64))
+            HOST_ARCH = $(HOST_ARCH_X64)
         endif
-        ifeq ($(PROCESSOR_ARQUITECTURE, x86))
-            HOST_ARCH = x86
+        ifeq ($(PROCESSOR_ARQUITECTURE, $(HOST_ARCH_X86)))
+            HOST_ARCH = $(HOST_ARCH_X86)
         endif
     endif
 else 
@@ -41,34 +59,28 @@ else
         PLATFORM = Linux
 
         # Detect architecture
-        ifeq ($(shell uname -m),x86_64)
-            HOST_ARCH = x64
+        ifeq ($(shell uname -m),$(HOST_ARCH_X86_64))
+            HOST_ARCH = $(HOST_ARCH_X64)
         endif
         ifeq ($(filter %86,$(shell uname -m)),)
-            HOST_ARCH = x86
+            HOST_ARCH = $(HOST_ARCH_X86)
         endif
-        ifeq ($(shell uname -m),armv7l)
-            HOST_ARCH = armv7hf
+        ifeq ($(shell uname -m),$(HOST_ARCH_ARMV7L))
+            HOST_ARCH = $(HOST_ARCH_ARMV7HF)
         endif
-        ifeq ($(shell uname -m),aarch64)
-            HOST_ARCH = aarch64
-        endif
-        ifeq ($(shell uname -m),armv8)
-            HOST_ARCH = aarch64
-        endif
-        ifeq ($(shell uname -m),arm64)
-            HOST_ARCH = aarch64
+        ifneq (,$(filter $(HOST_ARCH_AARCH64) $(HOST_ARCH_ARMV8) $(HOST_ARCH_ARM64), $(shell uname -m)))
+            HOST_ARCH = $(HOST_ARCH_AARCH64)
         endif
     endif
     ifeq ($(shell uname -s),Darwin)
         PLATFORM = Darwin
 
         # Detect architecture
-        ifeq ($(shell uname -m),x86_64)
-            HOST_ARCH = x64
+        ifeq ($(shell uname -m),$(HOST_ARCH_X86_64))
+            HOST_ARCH = $(HOST_ARCH_X64)
         endif
-        ifeq ($(shell uname -m), arm64)
-            HOST_ARCH = aarch64
+        ifeq ($(shell uname -m), $(HOST_ARCH_ARM64))
+            HOST_ARCH = $(HOST_ARCH_AARCH64)
         endif
     endif
 endif
