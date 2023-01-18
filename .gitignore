@@ -8,5 +8,6 @@ build
 bin
 lib
 
-# Ignore archive files
+# Ignore archive and object files
 *.a
+*.o
