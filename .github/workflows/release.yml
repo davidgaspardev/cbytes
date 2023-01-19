@@ -11,14 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: build library
+      - name: Build library
         run: make library
       
-      - name: upload library
+      - name: Upload library
         uses: actions/upload-artifact@v3
         with:
           name: libbytes.a
           path: lib/libbytes.a
+      
+      - name: Upload header
+        uses: actions/upload-artifact@v3
+        with:
+          name: bytes.h
+          path: src/bytes.h
