@@ -26,7 +26,7 @@ jobs:
         run: make library ARCH=x86_64
       
       - name: Copy library to base name
-        run: cp lib/libbytes_x64_64.a lib/libbytes.a
+        run: cp lib/libbytes_x86_64.a lib/libbytes.a
 
       - name: Build test
         run: make test ARCH=x86_64
