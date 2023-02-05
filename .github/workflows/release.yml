@@ -9,7 +9,6 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 jobs:
   build:
@@ -24,14 +23,11 @@ jobs:
       
       - name: Build library for x86_64
         run: make library ARCH=x86_64
-      
-      - name: Set tag name
-        run: echo "::set-env name=TAG_NAME::$(git describe --exact-match --tags $(git log --pretty=format:'%h' -n1))"
-      
+           
       - name: Create Release Page
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ env.TAG_NAME }}
+          tag_name: $(git describe --exact-match --tag)
           release_name: Release ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
