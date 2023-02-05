@@ -1,7 +1,9 @@
 NAME = bytes
 
+ARCH = arm64
+
 CC = clang
-CFLAGS = -c -Wall
+CFLAGS = -c -Wall -arch $(ARCH)
 
 BIN_DIRECTORY    = bin
 LIB_DIRECTORY    = lib
@@ -105,8 +107,8 @@ test: $(BIN_DIRECTORY) library
 	$(CC) $(TESTS_DIRECTORY)/main.c -o $(BIN_DIRECTORY)/test -L$(LIB_DIRECTORY) -lbytes
 
 library: $(LIB_DIRECTORY) $(BUILDERS)
-	@ar -rc $(LIB_DIRECTORY)/lib$(NAME).a $(BUILD_DIRECTORY)/$(NAME).o
-	@echo "[ OK ] Static library file created ($(LIB_DIRECTORY)/lib$(NAME).a)"
+	@ar -rc $(LIB_DIRECTORY)/lib$(NAME)_$(ARCH).a $(BUILD_DIRECTORY)/$(NAME).o
+	@echo "[ OK ] Static library file created ($(LIB_DIRECTORY)/lib$(NAME)_$(ARCH).a)"
 
 help:
 	@echo "Available targets: $(TARGETS)"
