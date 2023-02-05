@@ -26,7 +26,7 @@ jobs:
         run: make library ARCH=x86_64
       
       - name: Set tag name
-         run: echo "::set-env name=TAG_NAME::$(git describe --exact-match --tags)"
+        run: echo "::set-env name=TAG_NAME::$(git describe --exact-match --tags)"
            
       - name: Create Release Page
         uses: actions/create-release@v1
