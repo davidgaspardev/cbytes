@@ -21,6 +21,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      
+      - name: Build library for x86_64
+        run: make library ARCH=x86_64
+      
+      - name: Copy library to base name
+        run: cp lib/libbytes_x64_64.a lib/libbytes.a
 
       - name: Build test
         run: make test ARCH=x86_64
