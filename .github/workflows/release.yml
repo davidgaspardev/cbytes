@@ -3,8 +3,12 @@ name: release
 on:
   pull_request:
     branches: [ "main" ]
+    types: [closed]
     tags:
       - v*
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:
@@ -14,17 +18,40 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Build library
-        run: make library
+      - name: Build library for arm64
+        run: make library ARCH=arm64
       
-      - name: Upload library
-        uses: actions/upload-artifact@v3
-        with:
-          name: libbytes.a
-          path: lib/libbytes.a
+      - name: Build library for x86_64
+        run: make library ARCH=x86_64
       
-      - name: Upload header
-        uses: actions/upload-artifact@v3
+      - name: Create Release Page
+        uses: actions/create-release@v1
         with:
-          name: bytes.h
-          path: src/bytes.h
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: Release ${{ env.TAG_NAME }}
+          draft: false
+          prerelease: false
+      
+      - name: Upload header file to Release Page
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ env.UPLOAD_URL }}
+          asset_path: src/bytes.h
+          asset_name: bytes.h
+          content_type: text/plain
+      
+      - name: Upload compiled file (arm64) to Release Page
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ env.UPLOAD_URL }}
+          asset_path: lib/libbytes_arm64.a
+          asset_name: libbytes_arm64.a
+          content_type: text/plain
+      
+      - name: Upload compiled file (x86_64) to Release Page
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_utl: ${{ env.UPLOAD_URL }}
+          asset_path: lib/libytes_x86_64.a
+          asset_name: libbytes_x86_64.a
+          content_type: text/plain
