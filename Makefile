@@ -101,8 +101,8 @@ TARGETS = \
 
 .PHONY: $(TARGETS)
 
-test: $(BIN_DIRECTORY) $(BUILDERS)
-	$(CC) $(TESTS_DIRECTORY)/main.c $(BUILDERS) -o $(BIN_DIRECTORY)/test
+test: $(BIN_DIRECTORY) library
+	$(CC) $(TESTS_DIRECTORY)/main.c -o $(BIN_DIRECTORY)/test -L$(LIB_DIRECTORY) -lbytes
 
 library: $(LIB_DIRECTORY) $(BUILDERS)
 	@ar -rc $(LIB_DIRECTORY)/lib$(NAME).a $(BUILD_DIRECTORY)/$(NAME).o
