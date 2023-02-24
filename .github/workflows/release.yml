@@ -16,14 +16,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Build library for arm64
-        run: make library ARCH=arm64
+      # For arm64-apple-darwin
+      - name: Build library for arm64-apple-darwin
+        run: make library CTARGET=arm64-apple-darwin
+      - name: Clear build from arm64-apple-darwin
+        run: make clean_build
       
-      - name: Build library for x86_64
-        run: make library ARCH=x86_64
+      # For x86_64-apple-darwin
+      - name: Build library for x86_64-apple-darwin
+        run: make library CTARGET=x86_64-apple-darwin
+      - name: Clear build from x86_64-apple-darwin
+        run: make clean_build
       
-      - name: Build library for armv8
-        run: make library ARCH=armv8
+      # For arm64-linux-gnu
+      - name: Build library for arm64-linux-gnu
+        run: make library CTARGET=arm64-linux-gnu
+      - name: Clear build from arm64-linux-gnu
+        run: make clean_build
+      
+      # For x86_64-linux-gnu
+      - name: Build library for x86_64-linux-gnu
+        run: make library CTARGET=x86_64-linux-gnu
+      - name: Clear build from x86_64-linux-gnu
+        run: make clean_build
 
       - name: Create Release Page
         id: create_release
@@ -37,31 +52,39 @@ jobs:
       - name: Upload header file to Release Page
         uses: actions/upload-release-asset@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url}}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: src/bytes.h
           asset_name: bytes.h
           asset_content_type: text/plain
       
-      - name: Upload compiled file (arm64) to Release Page
+      - name: Upload compiled file (arm64-apple-darwin) to Release Page
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: lib/libbytes_arm64.a
-          asset_name: libbytes_arm64.a
+          asset_path: lib/libbytes_arm64-apple-darwin.a
+          asset_name: libbytes_arm64-apple-darwin.a
           asset_content_type: text/plain
       
-      - name: Upload compiled file (x86_64) to Release Page
+      - name: Upload compiled file (x86_64-apple-darwin) to Release Page
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: lib/libbytes_x86_64.a
-          asset_name: libbytes_x86_64.a
+          asset_path: lib/libbytes_x86_64-apple-darwin.a
+          asset_name: libbytes_x86_64-apple-darwin.a
           asset_content_type: text/plain
-      
-      - name: Upload compiled file (armv8) to Release Page
+
+      - name: Upload compiled file (arm64-linux-gnu) to Release Page
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: lib/libbytes_armv8.a
-          asset_name: libbytes_armv8.a
+          asset_path: lib/libbytes_arm64-linux-gnu.a
+          asset_name: libbytes_arm64-linux-gnu.a
+          asset_content_type: text/plain
+
+      - name: Upload compiled file (x86_64-linux-gnu) to Release Page
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: lib/libbytes_x86_64-linux-gnu.a
+          asset_name: libbytes_x86_64-linux-gnu.a
           asset_content_type: text/plain
