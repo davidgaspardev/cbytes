@@ -1,9 +1,13 @@
 NAME = bytes
 
-ARCH = arm64
+# ARCH = arm64
 
 CC = clang
-CFLAGS = -c -Wall -arch $(ARCH)
+ifdef CTARGET
+CFLAGS = -c -Wall -target $(CTARGET)
+else
+CFLAGS = -c -Wall
+endif
 
 BIN_DIRECTORY    = bin
 LIB_DIRECTORY    = lib
@@ -82,7 +86,7 @@ else
             HOST_ARCH = $(HOST_ARCH_X64)
         endif
         ifeq ($(shell uname -m), $(HOST_ARCH_ARM64))
-            HOST_ARCH = $(HOST_ARCH_AARCH64)
+            HOST_ARCH = $(HOST_ARCH_ARM64)
         endif
     endif
 endif
@@ -104,11 +108,17 @@ TARGETS = \
 .PHONY: $(TARGETS)
 
 test: $(BIN_DIRECTORY) library
-	$(CC) $(TESTS_DIRECTORY)/main.c -o $(BIN_DIRECTORY)/test -L$(LIB_DIRECTORY) -lbytes
+	@$(CC) $(TESTS_DIRECTORY)/main.c -o $(BIN_DIRECTORY)/test -L$(LIB_DIRECTORY) -lbytes
+	@echo "[ OK ] Test file created: $(BIN_DIRECTORY)/test"
 
 library: $(LIB_DIRECTORY) $(BUILDERS)
-	@ar -rc $(LIB_DIRECTORY)/lib$(NAME)_$(ARCH).a $(BUILD_DIRECTORY)/$(NAME).o
-	@echo "[ OK ] Static library file created ($(LIB_DIRECTORY)/lib$(NAME)_$(ARCH).a)"
+ifdef CTARGET
+	@ar -rc $(LIB_DIRECTORY)/lib$(NAME)_$(CTARGET).a $(BUILD_DIRECTORY)/$(NAME).o
+	@echo "[ OK ] Static library file created: $(LIB_DIRECTORY)/lib$(NAME)_$(CTARGET).a"
+else
+	@ar -rc $(LIB_DIRECTORY)/lib$(NAME).a $(BUILD_DIRECTORY)/$(NAME).o
+	@echo "[ OK ] Static library file created: $(LIB_DIRECTORY)/lib$(NAME).a"
+endif
 
 help:
 	@echo "Available targets: $(TARGETS)"
@@ -121,6 +131,9 @@ clean:
 	$(foreach dir, $(TMP_DIRECTORIES), $(shell rm -rf $(dir)))
 	@echo "[ OK ] Removed directories if they existed: $(TMP_DIRECTORIES)"
 
+clean_build:
+	@rm -rf $(BUILD_DIRECTORY)
+
 $(BUILD_DIRECTORY):
 	@mkdir -p $@
 
@@ -131,5 +144,6 @@ $(LIB_DIRECTORY):
 	@mkdir -p $@
 
 $(BUILD_DIRECTORY)/%.o: $(BUILD_DIRECTORY) $(SOURCE_DIRECTORY)/%.c
-	$(CC) $(CFLAGS) $(word 2, $^) -o $@
+	@$(CC) $(CFLAGS) $(word 2, $^) -o $@
+	@echo "[ OK ] Object file built: $@"
 
