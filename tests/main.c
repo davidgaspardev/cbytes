@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../src/cbytes.h"
+#include <cbytes.h>
 #include "copy_test.c"
 #include "length_test.c"
 #include "index_of_test.c"

@@ -1,6 +1,7 @@
 NAME = cbytes
 
 CC = clang
+CINCLUDES = -Isrc
 ifdef CTARGET
 CFLAGS = -c -Wall -target $(CTARGET)
 else
@@ -106,7 +107,7 @@ TARGETS = \
 .PHONY: $(TARGETS)
 
 test: $(BIN_DIRECTORY) library
-	@$(CC) $(TESTS_DIRECTORY)/main.c -o $(BIN_DIRECTORY)/test -L$(LIB_DIRECTORY) -lcbytes
+	@$(CC) $(CINCLUDES) $(TESTS_DIRECTORY)/main.c -o $(BIN_DIRECTORY)/test -L$(LIB_DIRECTORY) -lcbytes
 	@echo "[ OK ] Test file created: $(BIN_DIRECTORY)/test"
 
 library: $(LIB_DIRECTORY) $(BUILDERS)

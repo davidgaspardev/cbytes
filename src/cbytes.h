@@ -1,5 +1,5 @@
 /*
- * Bytes library
+ * cBytes library
  * Author: David Gaspar <davidgaspar.dev@gmail.com>
  */
 #ifndef CBYTES_H_

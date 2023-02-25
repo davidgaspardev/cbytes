@@ -1,6 +1,6 @@
 #include <stdio.h>
+#include <cbytes.h>
 #include "utils/log.c"
-#include "../src/cbytes.h"
 
 void copy_test(const char *data)
 {
