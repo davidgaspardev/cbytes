@@ -2,8 +2,8 @@
  * Bytes library
  * Author: David Gaspar <davidgaspar.dev@gmail.com>
  */
-#ifndef BYTES_H_
-#define BYTES_H_
+#ifndef CBYTES_H_
+#define CBYTES_H_
 
 typedef char          byte_t;
 typedef unsigned char ubyte_t;
