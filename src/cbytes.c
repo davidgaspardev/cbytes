@@ -29,10 +29,8 @@ ubyte_t equal(cbytes_t bytes_1, cbytes_t bytes_2)
         return false;
 
     for (int i = 0; i < bytes_1_length; i++)
-    {
         if (bytes_1[i] != bytes_2[i])
-            break;
-    }
+            return false;
 
     return true;
 }
