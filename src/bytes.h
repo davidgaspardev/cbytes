@@ -1,3 +1,7 @@
+#ifndef DEBUG
+#include <stdio.h>
+#endif
+
 /*
  * Bytes library
  * Author: David Gaspar <davidgaspar.dev@gmail.com>
