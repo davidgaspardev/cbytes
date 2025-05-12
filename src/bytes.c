@@ -30,7 +30,7 @@ ubyte_t equal(cbytes_t bytes_1, cbytes_t bytes_2)
 
     for (int i = 0; i < bytes_1_length; i++) {
         if (bytes_1[i] != bytes_2[i])
-            break;
+            return false;
     }
 
     return true;
@@ -121,7 +121,7 @@ int index_of(cbytes_t target, cbytes_t fragment)
     for (i = 0; i < target_len; i++) {
         if(target[i] == fragment[j]) {
             result = i;
-            
+
             for (; j < fragment_len; j++) {
                 if(target[i+j] != fragment[j]) {
                     result = -1;
