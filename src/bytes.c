@@ -10,8 +10,7 @@ unsigned int length(cbytes_t arg)
     unsigned int offset = 0;
     unsigned int count = 0;
 
-    while (*(arg + offset) != '\0')
-    {
+    while (*(arg + offset) != '\0') {
         ++offset;
         ++count;
     }
@@ -25,11 +24,11 @@ ubyte_t equal(cbytes_t bytes_1, cbytes_t bytes_2)
     unsigned int bytes_1_length = length(bytes_1);
     unsigned int bytes_2_length = length(bytes_2);
 
-    if (bytes_1_length != bytes_2_length)
+    if (bytes_1_length != bytes_2_length) {
         return false;
+    }
 
-    for (int i = 0; i < bytes_1_length; i++)
-    {
+    for (int i = 0; i < bytes_1_length; i++) {
         if (bytes_1[i] != bytes_2[i])
             break;
     }
@@ -46,13 +45,13 @@ byte_t copy(cbytes_t source, bytes_t destination, unsigned long sizeof_destinati
 {
     unsigned int source_length = length(source);
 
-    if (source_length > sizeof_destination)
-    {
+    if (source_length > sizeof_destination) {
         return -1;
     }
 
-    for (int i = 0; i < source_length; i++)
+    for (int i = 0; i < source_length; i++) {
         destination[i] = source[i];
+    }
 
     destination[source_length] = '\0';
 
@@ -107,31 +106,33 @@ int index_of(cbytes_t target, cbytes_t fragment)
     int target_len = length(target);
     int fragment_len = length(fragment);
 
-    if (fragment_len > target_len)
+    if (fragment_len > target_len) {
         return -1;
+    }
 
-    if (fragment_len == target_len)
-    {
-        if (equal(target, fragment))
-        {
+    if (fragment_len == target_len) {
+        if (equal(target, fragment)) {
             return 0;
         }
         return -1;
     }
 
     int i, j = 0;
-    for (i = 0; i < target_len; i++)
-    {
+    for (i = 0; i < target_len; i++) {
         if(target[i] == fragment[j]) {
             result = i;
-            for (; j < fragment_len; j++)
-                if(target[i+j] != fragment[j])
-                {
+            
+            for (; j < fragment_len; j++) {
+                if(target[i+j] != fragment[j]) {
                     result = -1;
                     j = 0;
                     break;
                 }
-            if (result != -1) return result;
+            }
+
+            if (result != -1) {
+                return result;
+            }
         }
     }
 
