@@ -9,12 +9,12 @@
 // of program is started
 int main(int argc, const char **argv)
 {
-
+    if (test_equal()) return 1;
+    
     if (argc > 1)
     {
         for (int i = 1; i < argc; i++)
         {
-            if (test_equal()) return 1;
             copy_test(argv[i]);
             length_test(argv[i]);
             index_of_test(argv[i]);
