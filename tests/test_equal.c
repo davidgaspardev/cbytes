@@ -1,6 +1,6 @@
 #include <stdio.h>
+#include <cbytes.h>
 #include "utils/log.c"
-#include "../src/bytes.h"
 
 int test_equal() {
     char *data1 = "Hello, World!";
