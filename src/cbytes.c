@@ -5,8 +5,7 @@
 #include "cbytes.h"
 
 // Get argument length
-unsigned int length(cbytes_t arg)
-{
+unsigned int length(cbytes_t arg) {
     unsigned int offset = 0;
     unsigned int count = 0;
 
@@ -19,8 +18,7 @@ unsigned int length(cbytes_t arg)
 }
 
 // Check that the values of two string (bytes_t ) are equal.
-ubyte_t equal(cbytes_t bytes_1, cbytes_t bytes_2)
-{
+ubyte_t equal(cbytes_t bytes_1, cbytes_t bytes_2) {
     unsigned int bytes_1_length = length(bytes_1);
     unsigned int bytes_2_length = length(bytes_2);
 
@@ -40,8 +38,7 @@ ubyte_t equal(cbytes_t bytes_1, cbytes_t bytes_2)
 // Impotant: destination needs to be declared as "byte_t [n]", because if
 // it is declared as "bytes_t ", it will not be possible to modify the data.
 // bytes_t  is a literal string read-only declaration.
-byte_t copy(cbytes_t source, bytes_t destination, unsigned long sizeof_destination)
-{
+byte_t copy(cbytes_t source, bytes_t destination, unsigned long sizeof_destination) {
     unsigned int source_length = length(source);
 
     if (source_length > sizeof_destination) {
@@ -59,17 +56,18 @@ byte_t copy(cbytes_t source, bytes_t destination, unsigned long sizeof_destinati
 
 // subcopy method
 // if the function returns -1 it means that the start_index variable is greater than the end_index variable.
-byte_t subcopy(cbytes_t src, unsigned int start_index, unsigned int end_index, bytes_t dest, unsigned long sizeof_dest)
-{
+byte_t subcopy(cbytes_t src, unsigned int start_index, unsigned int end_index, bytes_t dest, unsigned long sizeof_dest) {
     // Check if the initial index exceeds the final index.
-    if (start_index > end_index)
+    if (start_index > end_index) {
         return -1;
+    }
 
     // Check if the index exceeds the length of the string to be copied (source).
     // If it exceeds, update index to the last index of the string to be copied.
     unsigned int src_length = length(src);
-    if (end_index >= src_length)
+    if (end_index >= src_length) {
         end_index = (src_length - 1);
+    }
 
     // Check if the index exceeds the length of the string to be pasted (destination).
     // If it exceeds, update index to the last index of the string to be pasted.
@@ -89,18 +87,15 @@ byte_t subcopy(cbytes_t src, unsigned int start_index, unsigned int end_index, b
     return 1;
 }
 
-byte_t subcopy_len(cbytes_t src, unsigned int dest_len, bytes_t dest, unsigned long sizeof_dest)
-{
+byte_t subcopy_len(cbytes_t src, unsigned int dest_len, bytes_t dest, unsigned long sizeof_dest) {
     return subcopy(src, 0, (dest_len - 1), dest, sizeof_dest);
 }
 
-byte_t subcopy_index_len(cbytes_t src, unsigned int start_index, unsigned int dest_len, bytes_t dest, unsigned long sizeof_dest)
-{
+byte_t subcopy_index_len(cbytes_t src, unsigned int start_index, unsigned int dest_len, bytes_t dest, unsigned long sizeof_dest) {
     return subcopy(src, start_index, ((start_index + dest_len) - 1), dest, sizeof_dest);
 }
 
-int index_of(cbytes_t target, cbytes_t fragment)
-{
+int index_of(cbytes_t target, cbytes_t fragment) {
     int result = -1;
     int target_len = length(target);
     int fragment_len = length(fragment);

@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <cbytes.h>
 #include "utils/log.c"
 
