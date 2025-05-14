@@ -1,6 +1,6 @@
-# Understanding about "string" in c
+# cBytes
 
-Everything is based on a series of uniformly creasing addresses, to which each address has a binary value and that value corresponds to character in the **ASCII table**.
+Char bytes is based on a series of uniformly creasing addresses, to which each address has a binary value and that value corresponds to character in the **ASCII table**.
 
 
 ## Character array and character pointer 
