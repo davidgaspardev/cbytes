@@ -1,6 +1,6 @@
 #include <stdio.h>
+#include <cbytes.h>
 #include "utils/log.c"
-#include "../src/bytes.h"
 
 void insert_lookup_string(char *chars);
 
