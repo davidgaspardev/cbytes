@@ -4,12 +4,14 @@
 #include "length_test.c"
 #include "index_of_test.c"
 #include "test_equal.c"
+#include "test_copy.c"
 
 // Entry point, It is the point at which execution
 // of program is started
 int main(int argc, const char **argv)
 {
     if (test_equal()) return 1;
+    if (test_copy()) return 1;
     
     if (argc > 1)
     {
