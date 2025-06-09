@@ -110,6 +110,11 @@ test: $(BIN_DIRECTORY) library
 	@$(CC) $(CINCLUDES) $(TESTS_DIRECTORY)/main.c -o $(BIN_DIRECTORY)/test -L$(LIB_DIRECTORY) -lcbytes
 	@echo "[ OK ] Test file created: $(BIN_DIRECTORY)/test"
 
+test_copy: $(BIN_DIRECTORY) library
+	@$(CC) $(CINCLUDES) $(TESTS_DIRECTORY)/test_copy.c -o $(BIN_DIRECTORY)/test_copy -L$(LIB_DIRECTORY) -l$(NAME) -DTEST_COPY
+	@echo "[ OK ] Test copy file created: $(BIN_DIRECTORY)/test_copy"
+	@./$(BIN_DIRECTORY)/test_copy
+
 library: $(LIB_DIRECTORY) $(BUILDERS)
 ifdef CTARGET
 	@ar -rc $(LIB_DIRECTORY)/lib$(NAME)_$(CTARGET).a $(BUILD_DIRECTORY)/$(NAME).o
